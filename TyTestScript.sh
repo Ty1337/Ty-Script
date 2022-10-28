@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Make sure to Add two 2GB disks to s01
+# Name each of them sdb and sdc for each of the disks
+# Make sure to select VDI and Dynamically allocate them each
+# Make sure to mount them to the sata drive controller
+
 # Get the script files:
 # fresh_check.sh
 # host_info_t1.sh
@@ -16,6 +21,7 @@
 # cd /tmp
 
 # run the following command
+# chmod +rwx ./TyTestScript.sh
 # sed -i -e 's/\r$//' TyTestScript.sh
 
 # run TyTestScript.sh
@@ -80,11 +86,13 @@ systemctl start httpd
 # :wq
 
 # Run host_info_t1.sh last
+# cd /tmp
+# ./host_info_t1.sh
 
 # Exit s01
 # exit
 
-# scp s01_report_services.html to w01
-# scp root@s01:/tmp/s01_report_services.html /tmp
+# scp s01_report_t1.html to w01
+# scp s01_report_t1.html alice@w01:/tmp
 
 # check in firefox or upload it
