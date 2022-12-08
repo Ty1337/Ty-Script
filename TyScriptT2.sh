@@ -20,7 +20,7 @@ groupadd w01users
 useradd alice
 
 yum install nfs-utils -y -q
-
+#wait between running each command
 firewall-cmd --permanent --add-service=nfs3
 firewall-cmd --reload
 
@@ -35,7 +35,7 @@ getent group w01users
 # vi /etc/exports and add the following line
 /nfs/w01 w01(rw,all_squash,anonuid=1000,anongid=1000)
 # exit vi with :wq
-
+#wait between running it
 systemctl enable --now nfs-server
 
 ########################################################################################
@@ -56,37 +56,37 @@ yum install httpd -y -q
 # vi /etc/httpd/conf/httpd.conf and change the following line
 ErrorLog "logs/error_log" to ErrorLog syslog:local2
 # exit vi with :wq
-
+#wait between running it
 systemctl start httpd
 
 ########################################################################################
 # Excute these commands on s01
 
 yum install net-tools -y -q
-
+#wait between running commands
 firewall-cmd --permanent --add-port=514/tcp
 firewall-cmd --reload
 
-# vi /etc/rsyslog.conf and uncomment the following lines
+# vi /etc/rsyslog.conf and remove the #'s in the following lines
 #module(load="imtcp")/module(load="imtcp")
 #input(type="imtcp" port="514")
 
-# vi /etc/rsyslog.conf and add the following line
+# vi /etc/rsyslog.conf and add the following line at the bottom
 local2.* /var/log/httpd.err
 # exit vi with :wq
-
+# wait between restart 
 systemctl restart rsyslog
 
 ########################################################################################
 # Excute these commands on w01
 
-# vi /etc/rsyslog.conf and add the following line
+# vi /etc/rsyslog.conf and add the following line at the bottom
 local2.* @@s01
-
+# wait between restart
 systemctl restart rsyslog
 
 curl http://localhost
-
+# wait between each file
 logger -p local2.info "info test"
 logger -p local2.warning "warning test"
 logger -p local2.err "error test"
